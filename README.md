@@ -1,4 +1,4 @@
-# Campus Event Management System (B4)
+# Campus Event Management System 
 
 A lightweight campus event management system with real-time capacity enforcement, atomic seat allocation, and personal schedule clash prevention.
 
