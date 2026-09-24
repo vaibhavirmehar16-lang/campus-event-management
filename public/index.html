@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sipna COET - Event Management Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-hover: #172554;
+      --accent: #d97706;
+      --surface: rgba(255, 255, 255, 0.95);
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #e2e8f0;
+      --shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.75), rgba(30, 58, 138, 0.7)),
+                  url('campus.png') no-repeat center center fixed;
+      background-size: cover;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Official College Header */
+    nav {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid #cbd5e1;
+      padding: 10px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-section img {
+      height: 52px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-pill {
+      background: #eff6ff;
+      color: var(--primary);
+      padding: 7px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .btn-outline { background: white; border: 1.5px solid #cbd5e1; color: var(--text); }
+    .btn-outline:hover { background: #f8fafc; }
+    .btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; transform: none; }
+
+    /* Layout */
+    .container { max-width: 1140px; margin: 24px auto; padding: 0 16px; width: 100%; flex: 1; }
+    .grid { display: grid; grid-template-columns: 360px 1fr; gap: 24px; align-items: start; }
+    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+
+    /* Glass Cards */
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .card-header { margin-bottom: 16px; }
+    .card-title { font-size: 17px; font-weight: 800; color: var(--primary); }
+    .card-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* Form Styles */
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 5px; text-transform: uppercase; }
+    input {
+      width: 100%; padding: 10px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px;
+      font-size: 14px; outline: none; background: white;
+    }
+    input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15); }
+
+    /* Guidelines List */
+    .rule-item { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+    .rule-icon {
+      background: #dbeafe; color: var(--primary); width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; flex-shrink: 0;
+    }
+    .rule-text h4 { font-size: 13px; font-weight: 700; color: #1e293b; }
+    .rule-text p { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+    /* Event Empty State / Quick Help Box */
+    .empty-state {
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 14px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .empty-state h4 { font-size: 16px; color: #1e293b; font-weight: 700; margin-bottom: 6px; }
+    .empty-state p { font-size: 13px; color: var(--muted); max-width: 480px; margin: 0 auto 18px; }
+
+    .quick-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      text-align: left;
+      margin-top: 14px;
+    }
+    .step-box {
+      background: white;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .step-box strong { font-size: 12px; color: var(--primary); display: block; margin-bottom: 4px; }
+    .step-box span { font-size: 11px; color: var(--muted); line-height: 1.3; display: block; }
+
+    /* Event Cards */
+    .event-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+      transition: all 0.2s ease;
+    }
+    .event-card:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.08); }
+    .event-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+    .event-name { font-size: 16px; font-weight: 700; color: #0f172a; }
+    .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+    .badge-ok { background: #dcfce7; color: #15803d; }
+    .badge-full { background: #fee2e2; color: #b91c1c; }
+    .event-details { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+    .event-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 12px; }
+
+    /* Alert Banner */
+    .banner { padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; display: none; font-size: 13px; font-weight: 700; }
+    .banner-err { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+    .banner-ok { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center; z-index: 200; padding: 16px;
+    }
+    .modal {
+      background: white; width: 100%; max-width: 400px; border-radius: 16px; padding: 26px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    .role-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 10px; margin-bottom: 18px; }
+    .role-btn { padding: 8px; border: none; background: transparent; font-weight: 700; font-size: 12px; border-radius: 7px; cursor: pointer; color: var(--muted); }
+    .role-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
+  </style>
+</head>
+<body>
+
+  <!-- Official Top Navigation -->
+  <nav>
+    <div class="brand-section">
+      <img src="logosip.png" alt="Sipna College Logo" onerror="this.src='logo.png';" />
+    </div>
+    <div class="nav-actions">
+      <div id="userBadge" class="user-pill">
+        <span>👤</span> <span id="displayUser">STU101</span>
+      </div>
+      <button class="btn btn-outline" onclick="toggleModal(true)">Switch Role</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div id="banner" class="banner"></div>
+
+    <div class="grid">
+      <!-- Left Column -->
+      <div>
+        <!-- Admin Form -->
+        <div class="card" id="adminCard" style="display: none;">
+          <div class="card-header">
+            <h3 class="card-title">Create Campus Event</h3>
+            <p class="card-desc">Organizer Portal - Published with strict seat limits</p>
+          </div>
+          <form id="createEventForm">
+            <div class="form-group">
+              <label>Event Name</label>
+              <input type="text" id="evName" placeholder="e.g. AI Symposium" required />
+            </div>
+            <div class="form-group">
+              <label>Date</label>
+              <input type="date" id="evDate" required />
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;" class="form-group">
+              <div>
+                <label>Start Time</label>
+                <input type="time" id="evStart" required />
+              </div>
+              <div>
+                <label>End Time</label>
+                <input type="time" id="evEnd" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Seat Capacity</label>
+              <input type="number" id="evCapacity" min="1" placeholder="e.g. 50" required />
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">Publish Event</button>
+          </form>
+        </div>
+
+        <!-- Student Guidelines -->
+        <div class="card" id="studentCard">
+          <div class="card-header">
+            <h3 class="card-title">Event Policies</h3>
+            <p class="card-desc">Live validation enforced during registration</p>
+          </div>
+          <div class="rule-item">
+            <div class="rule-icon">1</div>
+            <div class="rule-text">
+              <h4>Atomic Capacity Control</h4>
+              <p>Seats are booked in real-time. Buttons lock automatically when full.</p>
+            </div>
+          </div>
+          <div class="rule-item">
+            <div class="rule-icon">2</div>
+            <div class="rule-text">
+              <h4>Overlap Detection</h4>
+              <p>Rejects any event overlapping with your existing schedule on the same date.</p>
+            </div>
+          </div>
+          <div class="rule-item">
+            <div class="rule-icon">3</div>
+            <div class="rule-text">
+              <h4>Contiguous Allowed</h4>
+              <p>Back-to-back events (e.g. 10:00–11:00 and 11:00–12:00) do not clash.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Events Area -->
+      <div>
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3 class="card-title">Available Events & Workshops</h3>
+              <p class="card-desc">Discover sessions and reserve your confirmed seat</p>
+            </div>
+            <button class="btn btn-outline" onclick="fetchEvents()" style="padding: 6px 12px; font-size: 12px;">🔄 Refresh</button>
+          </div>
+
+          <div id="eventsList" style="margin-top: 14px;">Loading events...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Role Login Modal -->
+  <div id="loginModal" class="modal-overlay">
+    <div class="modal">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="font-size: 18px; font-weight: 800; color: var(--primary);">Portal Sign In</h3>
+        <span onclick="toggleModal(false)" style="cursor: pointer; font-size: 22px; color: var(--muted);">&times;</span>
+      </div>
+
+      <div class="role-toggle">
+        <button id="tabStudent" class="role-btn active" onclick="setLoginRole('student')">Student</button>
+        <button id="tabAdmin" class="role-btn" onclick="setLoginRole('admin')">Organizer / Admin</button>
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group" id="studentIdGroup">
+          <label id="loginLabel">Student PRN / Roll Number</label>
+          <input type="text" id="loginIdInput" placeholder="e.g. STU101" value="STU101" required />
+        </div>
+        <div class="form-group" id="adminPassGroup" style="display:none;">
+          <label>Admin Passcode</label>
+          <input type="password" id="adminPassInput" placeholder="••••••••" value="admin123" />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Access Portal</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentRole = 'student';
+    let currentUser = 'STU101';
+
+    const banner = document.getElementById('banner');
+    const modal = document.getElementById('loginModal');
+
+    function notify(msg, isError) {
+      banner.className = `banner ${isError ? 'banner-err' : 'banner-ok'}`;
+      banner.textContent = msg;
+      banner.style.display = 'block';
+      setTimeout(() => { banner.style.display = 'none'; }, 5000);
+    }
+
+    function toggleModal(show) {
+      modal.style.display = show ? 'flex' : 'none';
+    }
+
+    function setLoginRole(role) {
+      currentRole = role;
+      document.getElementById('tabStudent').className = `role-btn ${role === 'student' ? 'active' : ''}`;
+      document.getElementById('tabAdmin').className = `role-btn ${role === 'admin' ? 'active' : ''}`;
+      
+      const adminPassGroup = document.getElementById('adminPassGroup');
+      const loginLabel = document.getElementById('loginLabel');
+      const loginInput = document.getElementById('loginIdInput');
+
+      if (role === 'admin') {
+        loginLabel.textContent = 'Organizer Username';
+        loginInput.value = 'Admin_Faculty';
+        adminPassGroup.style.display = 'block';
+      } else {
+        loginLabel.textContent = 'Student PRN / Roll Number';
+        loginInput.value = 'STU101';
+        adminPassGroup.style.display = 'none';
+      }
+    }
+
+    document.getElementById('loginForm').onsubmit = (e) => {
+      e.preventDefault();
+      currentUser = document.getElementById('loginIdInput').value.trim();
+      document.getElementById('displayUser').textContent = currentUser;
+      
+      if (currentRole === 'admin') {
+        document.getElementById('adminCard').style.display = 'block';
+        notify(`Logged in as Organizer (${currentUser})`, false);
+      } else {
+        document.getElementById('adminCard').style.display = 'none';
+        notify(`Logged in as Student (${currentUser})`, false);
+      }
+      toggleModal(false);
+      fetchEvents();
+    };
+
+    async function fetchEvents() {
+      try {
+        const res = await fetch('/api/events');
+        const events = await res.json();
+        const list = document.getElementById('eventsList');
+
+        if (!events.length) {
+          list.innerHTML = `
+            <div class="empty-state">
+              <div style="font-size: 32px; margin-bottom: 8px;">🗓️</div>
+              <h4>No Events Scheduled Yet</h4>
+              <p>There are no live departmental workshops or hackathons open right now.</p>
+              
+              <div class="quick-steps">
+                <div class="step-box">
+                  <strong>1. Switch to Organizer</strong>
+                  <span>Click "Switch Role" at top right to log in as Admin.</span>
+                </div>
+                <div class="step-box">
+                  <strong>2. Publish an Event</strong>
+                  <span>Add title, date, time slots, and max seat limits.</span>
+                </div>
+                <div class="step-box">
+                  <strong>3. Test Validation</strong>
+                  <span>Switch to Student to verify capacity locks & clash detection.</span>
+                </div>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        list.innerHTML = events.map(ev => {
+          const isFull = ev.seats_left <= 0;
+          return `
+            <div class="event-card">
+              <div class="event-head">
+                <span class="event-name">${ev.name}</span>
+                <span class="badge ${isFull ? 'badge-full' : 'badge-ok'}">
+                  ${isFull ? 'FULL' : `${ev.seats_left} seats left`}
+                </span>
+              </div>
+              <div class="event-details">
+                <span>📅 ${ev.date}</span>
+                <span>⏰ ${ev.start_time} - ${ev.end_time}</span>
+                <span>👥 ${ev.registered_count} / ${ev.capacity} Seats Filled</span>
+              </div>
+              <div class="event-footer">
+                <span style="font-size: 12px; color: var(--muted);">Confirmed live booking</span>
+                <button 
+                  class="btn btn-primary"
+                  style="padding: 7px 14px; font-size: 12px;"
+                  onclick="registerForEvent(${ev.id})" 
+                  ${isFull ? 'disabled' : ''}>
+                  ${isFull ? 'Sold Out' : 'Register Now'}
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        notify('Failed to connect to backend server', true);
+      }
+    }
+
+    async function registerForEvent(eventId) {
+      if (currentRole === 'admin') {
+        notify('Organizers cannot register for events. Switch to Student role.', true);
+        return;
+      }
+
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event_id: eventId, student_id: currentUser })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        notify(data.error, true);
+      } else {
+        notify(data.message, false);
+        fetchEvents();
+      }
+    }
+
+    document.getElementById('createEventForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('evName').value,
+        date: document.getElementById('evDate').value,
+        start_time: document.getElementById('evStart').value,
+        end_time: document.getElementById('evEnd').value,
+        capacity: Number(document.getElementById('evCapacity').value)
+      };
+
+      const res = await fetch('/api/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        notify(data.error, true);
+      } else {
+        notify('Event published successfully!', false);
+        document.getElementById('createEventForm').reset();
+        fetchEvents();
+      }
+    };
+
+    fetchEvents();
+  </script>
+</body>
+</html>
