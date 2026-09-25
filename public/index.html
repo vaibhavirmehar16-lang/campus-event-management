@@ -17,7 +17,6 @@
       --muted: #475569;
       --border: #e2e8f0;
       --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15);
-      --bot-primary: #1e3a8a;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
@@ -32,7 +31,6 @@
       flex-direction: column;
     }
 
-    /* Official College Header */
     nav {
       background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(12px);
@@ -61,7 +59,6 @@
       border: 1px solid #bfdbfe;
     }
 
-    /* Buttons */
     .btn {
       padding: 9px 18px;
       border-radius: 8px;
@@ -81,12 +78,10 @@
     .btn-outline:hover { background: #f8fafc; }
     .btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; transform: none; }
 
-    /* Layout */
     .container { max-width: 1180px; margin: 24px auto; padding: 0 16px; width: 100%; flex: 1; }
     .grid { display: grid; grid-template-columns: 380px 1fr; gap: 24px; align-items: start; }
     @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
 
-    /* Glass Cards */
     .card {
       background: var(--surface);
       backdrop-filter: blur(16px);
@@ -101,7 +96,6 @@
     .card-title { font-size: 17px; font-weight: 800; color: var(--primary); }
     .card-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-    /* Forms */
     .form-group { margin-bottom: 12px; }
     label { display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 5px; text-transform: uppercase; }
     input {
@@ -110,7 +104,6 @@
     }
     input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15); }
 
-    /* Guidelines */
     .rule-item { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
     .rule-icon {
       background: #dbeafe; color: var(--primary); width: 26px; height: 26px; border-radius: 50%;
@@ -119,7 +112,6 @@
     .rule-text h4 { font-size: 13px; font-weight: 700; color: #1e293b; }
     .rule-text p { font-size: 12px; color: var(--muted); line-height: 1.4; }
 
-    /* Event Cards */
     .event-card {
       background: white;
       border: 1px solid #e2e8f0;
@@ -138,7 +130,6 @@
     .event-details { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--muted); margin-bottom: 14px; }
     .event-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 12px; }
 
-    /* Alert Banner */
     .banner { padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; display: none; font-size: 13px; font-weight: 700; }
     .banner-err { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
     .banner-ok { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
@@ -169,9 +160,9 @@
       position: fixed;
       bottom: 96px;
       right: 24px;
-      width: 360px;
+      width: 380px;
       max-width: calc(100vw - 32px);
-      height: 500px;
+      height: 520px;
       max-height: calc(100vh - 120px);
       background: white;
       border-radius: 18px;
@@ -211,7 +202,7 @@
     }
 
     .chat-bubble {
-      max-width: 82%;
+      max-width: 86%;
       padding: 10px 14px;
       border-radius: 14px;
       font-size: 13px;
@@ -230,6 +221,28 @@
       color: white;
       border-top-right-radius: 4px;
       align-self: flex-end;
+    }
+
+    .chat-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .chat-chip {
+      background: #e0e7ff;
+      color: #1e3a8a;
+      border: 1px solid #c7d2fe;
+      padding: 5px 11px;
+      border-radius: 14px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .chat-chip:hover {
+      background: #c7d2fe;
+      transform: translateY(-1px);
     }
 
     .chat-input-area {
@@ -268,7 +281,6 @@
     }
     @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.1); } }
 
-    /* Modal Overlay */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(6px);
       display: none; align-items: center; justify-content: center; z-index: 200; padding: 16px;
@@ -401,11 +413,12 @@
     </div>
     <div class="chat-messages" id="chatMessages">
       <div class="chat-bubble bot">
-        Hello! I'm <strong>SipnaBot</strong>. You can ask me:
-        <br/>• <em>"What events are available?"</em>
-        <br/>• <em>"How does clash detection work?"</em>
-        <br/>• <em>"How do I switch to admin?"</em>
-        <br/>You can also tap the 🎙️ mic button and speak to me!
+        Hello! I'm <strong>SipnaBot</strong>. I can help with schedules, capacity policies, and registration rules!
+        <div class="chat-chips">
+          <button class="chat-chip" onclick="handleChipClick('What events are available?')">📅 Show Events</button>
+          <button class="chat-chip" onclick="handleChipClick('How do I register?')">📝 How to Register</button>
+          <button class="chat-chip" onclick="handleChipClick('How does clash detection work?')">⚡ Clash Rules</button>
+        </div>
       </div>
     </div>
     <div class="chat-input-area">
@@ -609,39 +622,98 @@
       }
     };
 
-    /* --- Chatbot & Voice Assistant Logic --- */
-    function addChatBubble(text, sender) {
+    /* --- Enhanced SipnaBot Intelligent Assistant --- */
+    let conversationContext = {
+      userName: 'Student'
+    };
+
+    function addChatBubble(text, sender, chips = []) {
       const bubble = document.createElement('div');
       bubble.className = `chat-bubble ${sender}`;
       bubble.innerHTML = text;
+
+      if (chips && chips.length > 0) {
+        const chipContainer = document.createElement('div');
+        chipContainer.className = 'chat-chips';
+        chips.forEach(chip => {
+          const btn = document.createElement('button');
+          btn.className = 'chat-chip';
+          btn.textContent = chip;
+          btn.onclick = () => handleChipClick(chip);
+          chipContainer.appendChild(btn);
+        });
+        bubble.appendChild(chipContainer);
+      }
+
       chatMessages.appendChild(bubble);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    function processBotResponse(query) {
-      const q = query.toLowerCase();
-      let reply = "";
+    function handleChipClick(chipText) {
+      chatInput.value = chipText;
+      sendChatMessage();
+    }
 
-      if (q.includes("event") || q.includes("workshop") || q.includes("available") || q.includes("list")) {
-        if (!loadedEvents.length) {
-          reply = "There are currently no events listed. Organizers can publish new ones using the Organizer portal!";
+    function processBotResponse(query) {
+      const q = query.toLowerCase().trim();
+      let reply = "";
+      let chips = [];
+
+      // 1. Name & Intro Recognition
+      const nameMatch = q.match(/(?:my name is|i am|this is|call me)\s+([a-zA-Z]+)/i);
+      if (nameMatch) {
+        conversationContext.userName = nameMatch[1];
+        reply = `Pleasure to meet you, <strong>${conversationContext.userName}</strong>! How can I assist you with your campus event bookings today?`;
+        chips = ["Available Events", "How to Register", "Clash Rules"];
+      }
+      // 2. Registration Guide
+      else if (q.includes("how to register") || q.includes("register") || q.includes("book a seat") || q.includes("enroll")) {
+        reply = `Registering takes just 3 simple steps:<br/>
+        1. Browse the <strong>Available Events</strong> list on the right.<br/>
+        2. Click <strong>Register Now</strong> on any open session.<br/>
+        3. The system atomically locks your verified seat in real time!`;
+        chips = ["Available Events", "Clash Rules"];
+      }
+      // 3. Live Events Awareness
+      else if (q.includes("event") || q.includes("workshop") || q.includes("available") || q.includes("list")) {
+        if (!loadedEvents || !loadedEvents.length) {
+          reply = `There are currently no events scheduled. Organizers can sign in via <strong>Switch Role</strong> to publish workshops!`;
+          chips = ["Switch to Admin", "Clash Rules"];
         } else {
-          reply = `There are <strong>${loadedEvents.length} event(s)</strong> available:<br/>` + 
-            loadedEvents.map(e => `• <strong>${e.name}</strong> on ${e.date} (${e.start_time} - ${e.end_time}), ${e.seats_left} seats remaining.`).join("<br/>");
+          reply = `We have <strong>${loadedEvents.length} active session(s)</strong> available:<br/>` + 
+            loadedEvents.map(e => `• <strong>${e.name}</strong> on ${e.date} (${e.start_time} - ${e.end_time}), <em>${e.seats_left > 0 ? e.seats_left + ' seats available' : 'Sold Out'}</em>`).join("<br/>");
+          chips = ["How to Register", "Clash Rules"];
         }
-      } else if (q.includes("clash") || q.includes("conflict") || q.includes("overlap") || q.includes("time")) {
-        reply = "Our system prevents schedule conflicts using strict interval checking: two events clash if they are on the same date and <em>eventA.start &lt; eventB.end && eventB.start &lt; eventA.end</em>. Contiguous times (e.g., 10-11 and 11-12) do not conflict!";
-      } else if (q.includes("admin") || q.includes("organizer") || q.includes("create")) {
-        reply = "To create events, click <strong>Switch Role</strong> at the top right, select <strong>Organizer / Admin</strong>, and sign in with password <em>admin123</em>.";
-      } else if (q.includes("capacity") || q.includes("seats") || q.includes("full")) {
-        reply = "Seats are allocated atomically inside an ACID transaction on our database. As soon as an event reaches maximum capacity, registrations lock automatically.";
-      } else if (q.includes("who are you") || q.includes("sipnabot") || q.includes("hello") || q.includes("hi")) {
-        reply = "Hello! I am SipnaBot, your campus event companion. Ask me about upcoming workshops, seat availability, or scheduling rules!";
-      } else {
-        reply = "I can help you with event registrations, time clash rules, or organizer controls. Try asking: <em>'What events are available?'</em> or <em>'How does conflict check work?'</em>";
+      }
+      // 4. Clash & Conflict Detection Rules
+      else if (q.includes("clash") || q.includes("conflict") || q.includes("overlap") || q.includes("rule") || q.includes("timing")) {
+        reply = `Our scheduling engine blocks conflicting events using interval detection:<br/>
+        <code>(eventA.start &lt; eventB.end) &amp;&amp; (eventB.start &lt; eventA.end)</code><br/>
+        Contiguous back-to-back sessions (e.g. 10:00–11:00 and 11:00–12:00) evaluate to <strong>false</strong> and do not conflict!`;
+        chips = ["Available Events", "Capacity Policy"];
+      }
+      // 5. Admin / Role Guidance
+      else if (q.includes("admin") || q.includes("organizer") || q.includes("create") || q.includes("publish")) {
+        reply = `To publish events: Click <strong>Switch Role</strong> in the top header, pick <strong>Organizer / Admin</strong>, and log in with passcode <em>admin123</em>.`;
+        chips = ["Available Events", "How to Register"];
+      }
+      // 6. Capacity & Concurrency Protection
+      else if (q.includes("capacity") || q.includes("atomic") || q.includes("seats") || q.includes("full") || q.includes("policy")) {
+        reply = `Seats are reserved inside an <strong>ACID transaction</strong> in our SQLite database. This guarantees atomic counter updates and strictly blocks race-condition overbooking!`;
+        chips = ["Available Events", "Clash Rules"];
+      }
+      // 7. General Greetings
+      else if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
+        reply = `Hello ${conversationContext.userName !== 'Student' ? conversationContext.userName : ''}! I am SipnaBot, your campus companion. What would you like to explore?`;
+        chips = ["Available Events", "How to Register", "Clash Rules"];
+      }
+      // Fallback
+      else {
+        reply = `I can help with live event listings, conflict checks, or organizer setup. Select an option below or ask me directly:`;
+        chips = ["Available Events", "How to Register", "Clash Rules", "Switch to Admin"];
       }
 
-      addChatBubble(reply, 'bot');
+      addChatBubble(reply, 'bot', chips);
       speakText(reply.replace(/<[^>]*>?/gm, ''));
     }
 
@@ -650,7 +722,7 @@
       if (!text) return;
       addChatBubble(text, 'user');
       chatInput.value = '';
-      setTimeout(() => { processBotResponse(text); }, 300);
+      setTimeout(() => { processBotResponse(text); }, 250);
     }
 
     function handleChatKey(e) {
@@ -691,13 +763,8 @@
         sendChatMessage();
       };
 
-      recognition.onerror = () => {
-        stopVoice();
-      };
-
-      recognition.onend = () => {
-        stopVoice();
-      };
+      recognition.onerror = () => { stopVoice(); };
+      recognition.onend = () => { stopVoice(); };
     }
 
     function toggleVoice() {
