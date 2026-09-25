@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sipna COET - Event Management Portal</title>
+  <title>Sipna COET - Smart Event Hub & AI Assistant</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,12 +11,13 @@
     :root {
       --primary: #1e3a8a;
       --primary-hover: #172554;
-      --accent: #d97706;
+      --accent: #2563eb;
       --surface: rgba(255, 255, 255, 0.95);
       --text: #0f172a;
       --muted: #475569;
       --border: #e2e8f0;
-      --shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.15);
+      --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15);
+      --bot-primary: #1e3a8a;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
@@ -36,7 +37,7 @@
       background: rgba(255, 255, 255, 0.98);
       backdrop-filter: blur(12px);
       border-bottom: 2px solid #cbd5e1;
-      padding: 10px 32px;
+      padding: 10px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -46,28 +47,14 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
-    .brand-section {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    .brand-section { display: flex; align-items: center; gap: 14px; }
+    .brand-section img { height: 48px; width: auto; object-fit: contain; }
 
-    .brand-section img {
-      height: 52px;
-      width: auto;
-      object-fit: contain;
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
     .user-pill {
       background: #eff6ff;
       color: var(--primary);
-      padding: 7px 16px;
+      padding: 7px 15px;
       border-radius: 9999px;
       font-size: 13px;
       font-weight: 700;
@@ -85,6 +72,7 @@
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
     }
     .btn-primary { background: var(--primary); color: white; }
@@ -94,15 +82,15 @@
     .btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; transform: none; }
 
     /* Layout */
-    .container { max-width: 1140px; margin: 24px auto; padding: 0 16px; width: 100%; flex: 1; }
-    .grid { display: grid; grid-template-columns: 360px 1fr; gap: 24px; align-items: start; }
-    @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+    .container { max-width: 1180px; margin: 24px auto; padding: 0 16px; width: 100%; flex: 1; }
+    .grid { display: grid; grid-template-columns: 380px 1fr; gap: 24px; align-items: start; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
 
     /* Glass Cards */
     .card {
       background: var(--surface);
       backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.85);
       border-radius: 16px;
       padding: 22px;
       box-shadow: var(--shadow);
@@ -113,7 +101,7 @@
     .card-title { font-size: 17px; font-weight: 800; color: var(--primary); }
     .card-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-    /* Form Styles */
+    /* Forms */
     .form-group { margin-bottom: 12px; }
     label { display: block; font-size: 12px; font-weight: 700; color: #334155; margin-bottom: 5px; text-transform: uppercase; }
     input {
@@ -122,7 +110,7 @@
     }
     input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15); }
 
-    /* Guidelines List */
+    /* Guidelines */
     .rule-item { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
     .rule-icon {
       background: #dbeafe; color: var(--primary); width: 26px; height: 26px; border-radius: 50%;
@@ -130,34 +118,6 @@
     }
     .rule-text h4 { font-size: 13px; font-weight: 700; color: #1e293b; }
     .rule-text p { font-size: 12px; color: var(--muted); line-height: 1.4; }
-
-    /* Event Empty State / Quick Help Box */
-    .empty-state {
-      background: #f8fafc;
-      border: 2px dashed #cbd5e1;
-      border-radius: 14px;
-      padding: 32px 24px;
-      text-align: center;
-    }
-    .empty-state h4 { font-size: 16px; color: #1e293b; font-weight: 700; margin-bottom: 6px; }
-    .empty-state p { font-size: 13px; color: var(--muted); max-width: 480px; margin: 0 auto 18px; }
-
-    .quick-steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px;
-      text-align: left;
-      margin-top: 14px;
-    }
-    .step-box {
-      background: white;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    }
-    .step-box strong { font-size: 12px; color: var(--primary); display: block; margin-bottom: 4px; }
-    .step-box span { font-size: 11px; color: var(--muted); line-height: 1.3; display: block; }
 
     /* Event Cards */
     .event-card {
@@ -183,7 +143,132 @@
     .banner-err { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
     .banner-ok { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
 
-    /* Modal */
+    /* Floating Chatbot Widget */
+    .chat-toggle-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      border: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      z-index: 1000;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .chat-toggle-btn:hover { transform: scale(1.08); box-shadow: 0 12px 30px rgba(37, 99, 235, 0.5); }
+
+    .chat-container {
+      position: fixed;
+      bottom: 96px;
+      right: 24px;
+      width: 360px;
+      max-width: calc(100vw - 32px);
+      height: 500px;
+      max-height: calc(100vh - 120px);
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      border: 1px solid #cbd5e1;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+      overflow: hidden;
+      animation: popUp 0.25s ease-out;
+    }
+
+    @keyframes popUp {
+      from { opacity: 0; transform: translateY(15px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .chat-header {
+      background: var(--primary);
+      color: white;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-header-title { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+    .chat-header-actions button { background: none; border: none; color: white; font-size: 18px; cursor: pointer; }
+
+    .chat-messages {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #f8fafc;
+    }
+
+    .chat-bubble {
+      max-width: 82%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .chat-bubble.bot {
+      background: white;
+      color: #0f172a;
+      border: 1px solid #e2e8f0;
+      border-top-left-radius: 4px;
+      align-self: flex-start;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .chat-bubble.user {
+      background: var(--accent);
+      color: white;
+      border-top-right-radius: 4px;
+      align-self: flex-end;
+    }
+
+    .chat-input-area {
+      padding: 12px;
+      background: white;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .chat-input-area input {
+      flex: 1;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 13px;
+    }
+    .voice-btn {
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.2s ease;
+    }
+    .voice-btn.recording {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #ef4444;
+      animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+    /* Modal Overlay */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(6px);
       display: none; align-items: center; justify-content: center; z-index: 200; padding: 16px;
@@ -199,10 +284,10 @@
 </head>
 <body>
 
-  <!-- Official Top Navigation -->
+  <!-- Navigation -->
   <nav>
     <div class="brand-section">
-      <img src="logosip.png" alt="Sipna College Logo" onerror="this.src='logo.png';" />
+      <img src="logosip.png" alt="Sipna Logo" onerror="this.src='logo.png';" />
     </div>
     <div class="nav-actions">
       <div id="userBadge" class="user-pill">
@@ -222,7 +307,7 @@
         <div class="card" id="adminCard" style="display: none;">
           <div class="card-header">
             <h3 class="card-title">Create Campus Event</h3>
-            <p class="card-desc">Organizer Portal - Published with strict seat limits</p>
+            <p class="card-desc">Organizer Portal - Enforces capacity limits</p>
           </div>
           <form id="createEventForm">
             <div class="form-group">
@@ -255,39 +340,39 @@
         <div class="card" id="studentCard">
           <div class="card-header">
             <h3 class="card-title">Event Policies</h3>
-            <p class="card-desc">Live validation enforced during registration</p>
+            <p class="card-desc">Automatic validation during registration</p>
           </div>
           <div class="rule-item">
             <div class="rule-icon">1</div>
             <div class="rule-text">
               <h4>Atomic Capacity Control</h4>
-              <p>Seats are booked in real-time. Buttons lock automatically when full.</p>
+              <p>Seats update live. Registration locks automatically when full.</p>
             </div>
           </div>
           <div class="rule-item">
             <div class="rule-icon">2</div>
             <div class="rule-text">
               <h4>Overlap Detection</h4>
-              <p>Rejects any event overlapping with your existing schedule on the same date.</p>
+              <p>Rejects events that conflict with your registered schedule on the same day.</p>
             </div>
           </div>
           <div class="rule-item">
             <div class="rule-icon">3</div>
             <div class="rule-text">
               <h4>Contiguous Allowed</h4>
-              <p>Back-to-back events (e.g. 10:00–11:00 and 11:00–12:00) do not clash.</p>
+              <p>Contiguous back-to-back events (e.g. 10:00–11:00 and 11:00–12:00) do not clash.</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right Column: Events Area -->
+      <!-- Right Column -->
       <div>
         <div class="card" style="margin-bottom:0;">
           <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
             <div>
               <h3 class="card-title">Available Events & Workshops</h3>
-              <p class="card-desc">Discover sessions and reserve your confirmed seat</p>
+              <p class="card-desc">Discover sessions and reserve your seat</p>
             </div>
             <button class="btn btn-outline" onclick="fetchEvents()" style="padding: 6px 12px; font-size: 12px;">🔄 Refresh</button>
           </div>
@@ -295,6 +380,38 @@
           <div id="eventsList" style="margin-top: 14px;">Loading events...</div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Floating Chatbot Widget Button -->
+  <button class="chat-toggle-btn" onclick="toggleChat()" title="Open Sipna Assistant">
+    💬
+  </button>
+
+  <!-- Chatbot Window -->
+  <div class="chat-container" id="chatContainer">
+    <div class="chat-header">
+      <div class="chat-header-title">
+        <span>🤖</span>
+        <span>SipnaBot Voice & Chat</span>
+      </div>
+      <div class="chat-header-actions">
+        <button onclick="toggleChat()">&times;</button>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-bubble bot">
+        Hello! I'm <strong>SipnaBot</strong>. You can ask me:
+        <br/>• <em>"What events are available?"</em>
+        <br/>• <em>"How does clash detection work?"</em>
+        <br/>• <em>"How do I switch to admin?"</em>
+        <br/>You can also tap the 🎙️ mic button and speak to me!
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()" title="Speak with Voice">🎙️</button>
+      <input type="text" id="chatInput" placeholder="Type or ask by voice..." onkeypress="handleChatKey(event)" />
+      <button class="btn btn-primary" style="padding: 8px 12px;" onclick="sendChatMessage()">Send</button>
     </div>
   </div>
 
@@ -328,9 +445,14 @@
   <script>
     let currentRole = 'student';
     let currentUser = 'STU101';
+    let loadedEvents = [];
 
     const banner = document.getElementById('banner');
     const modal = document.getElementById('loginModal');
+    const chatContainer = document.getElementById('chatContainer');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const voiceBtn = document.getElementById('voiceBtn');
 
     function notify(msg, isError) {
       banner.className = `banner ${isError ? 'banner-err' : 'banner-ok'}`;
@@ -341,6 +463,14 @@
 
     function toggleModal(show) {
       modal.style.display = show ? 'flex' : 'none';
+    }
+
+    function toggleChat() {
+      const isVisible = chatContainer.style.display === 'flex';
+      chatContainer.style.display = isVisible ? 'none' : 'flex';
+      if (!isVisible) {
+        chatInput.focus();
+      }
     }
 
     function setLoginRole(role) {
@@ -383,29 +513,15 @@
       try {
         const res = await fetch('/api/events');
         const events = await res.json();
+        loadedEvents = events;
         const list = document.getElementById('eventsList');
 
         if (!events.length) {
           list.innerHTML = `
-            <div class="empty-state">
-              <div style="font-size: 32px; margin-bottom: 8px;">🗓️</div>
-              <h4>No Events Scheduled Yet</h4>
-              <p>There are no live departmental workshops or hackathons open right now.</p>
-              
-              <div class="quick-steps">
-                <div class="step-box">
-                  <strong>1. Switch to Organizer</strong>
-                  <span>Click "Switch Role" at top right to log in as Admin.</span>
-                </div>
-                <div class="step-box">
-                  <strong>2. Publish an Event</strong>
-                  <span>Add title, date, time slots, and max seat limits.</span>
-                </div>
-                <div class="step-box">
-                  <strong>3. Test Validation</strong>
-                  <span>Switch to Student to verify capacity locks & clash detection.</span>
-                </div>
-              </div>
+            <div style="background:#f8fafc; border:2px dashed #cbd5e1; border-radius:14px; padding:32px 24px; text-align:center;">
+              <div style="font-size:32px; margin-bottom:8px;">🗓️</div>
+              <h4 style="font-size:16px; color:#1e293b; font-weight:700;">No Events Scheduled Yet</h4>
+              <p style="font-size:13px; color:var(--muted); margin-top:4px;">Organizers can switch role to publish departmental workshops.</p>
             </div>
           `;
           return;
@@ -459,8 +575,10 @@
       const data = await res.json();
       if (!res.ok) {
         notify(data.error, true);
+        speakText(data.error);
       } else {
         notify(data.message, false);
+        speakText(data.message);
         fetchEvents();
       }
     }
@@ -490,6 +608,120 @@
         fetchEvents();
       }
     };
+
+    /* --- Chatbot & Voice Assistant Logic --- */
+    function addChatBubble(text, sender) {
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${sender}`;
+      bubble.innerHTML = text;
+      chatMessages.appendChild(bubble);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function processBotResponse(query) {
+      const q = query.toLowerCase();
+      let reply = "";
+
+      if (q.includes("event") || q.includes("workshop") || q.includes("available") || q.includes("list")) {
+        if (!loadedEvents.length) {
+          reply = "There are currently no events listed. Organizers can publish new ones using the Organizer portal!";
+        } else {
+          reply = `There are <strong>${loadedEvents.length} event(s)</strong> available:<br/>` + 
+            loadedEvents.map(e => `• <strong>${e.name}</strong> on ${e.date} (${e.start_time} - ${e.end_time}), ${e.seats_left} seats remaining.`).join("<br/>");
+        }
+      } else if (q.includes("clash") || q.includes("conflict") || q.includes("overlap") || q.includes("time")) {
+        reply = "Our system prevents schedule conflicts using strict interval checking: two events clash if they are on the same date and <em>eventA.start &lt; eventB.end && eventB.start &lt; eventA.end</em>. Contiguous times (e.g., 10-11 and 11-12) do not conflict!";
+      } else if (q.includes("admin") || q.includes("organizer") || q.includes("create")) {
+        reply = "To create events, click <strong>Switch Role</strong> at the top right, select <strong>Organizer / Admin</strong>, and sign in with password <em>admin123</em>.";
+      } else if (q.includes("capacity") || q.includes("seats") || q.includes("full")) {
+        reply = "Seats are allocated atomically inside an ACID transaction on our database. As soon as an event reaches maximum capacity, registrations lock automatically.";
+      } else if (q.includes("who are you") || q.includes("sipnabot") || q.includes("hello") || q.includes("hi")) {
+        reply = "Hello! I am SipnaBot, your campus event companion. Ask me about upcoming workshops, seat availability, or scheduling rules!";
+      } else {
+        reply = "I can help you with event registrations, time clash rules, or organizer controls. Try asking: <em>'What events are available?'</em> or <em>'How does conflict check work?'</em>";
+      }
+
+      addChatBubble(reply, 'bot');
+      speakText(reply.replace(/<[^>]*>?/gm, ''));
+    }
+
+    function sendChatMessage() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      addChatBubble(text, 'user');
+      chatInput.value = '';
+      setTimeout(() => { processBotResponse(text); }, 300);
+    }
+
+    function handleChatKey(e) {
+      if (e.key === 'Enter') sendChatMessage();
+    }
+
+    /* Voice Synthesis (Text-to-Speech) */
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    /* Voice Recognition (Speech-to-Text) */
+    let recognition = null;
+    let isListening = false;
+
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => {
+        isListening = true;
+        voiceBtn.classList.add('recording');
+        chatInput.placeholder = "Listening... speak now";
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        chatInput.value = transcript;
+        sendChatMessage();
+      };
+
+      recognition.onerror = () => {
+        stopVoice();
+      };
+
+      recognition.onend = () => {
+        stopVoice();
+      };
+    }
+
+    function toggleVoice() {
+      if (!recognition) {
+        alert("Speech Recognition is not supported in this browser. Please use Chrome.");
+        return;
+      }
+      if (isListening) {
+        recognition.stop();
+        stopVoice();
+      } else {
+        try {
+          recognition.start();
+        } catch (e) {
+          stopVoice();
+        }
+      }
+    }
+
+    function stopVoice() {
+      isListening = false;
+      voiceBtn.classList.remove('recording');
+      chatInput.placeholder = "Type or ask by voice...";
+    }
 
     fetchEvents();
   </script>
