@@ -2,7 +2,7 @@
 
 A lightweight campus event management system with real-time capacity enforcement, atomic seat allocation, and personal schedule clash prevention.
 
-#####  Demo Link-https://sipna-campus-event-management.onrender.com/
+####  Demo Link-https://sipna-campus-event-management.onrender.com/
 ## Features
 - **Event Discovery & Listing**: Displays live registration ratios (`Registered: X / Capacity: Y`).
 - **Schedule Clash Prevention**: Enforces interval overlap validation on identical dates (`eventA.start < eventB.end && eventB.start < eventA.end`).
